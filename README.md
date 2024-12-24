@@ -1,2 +1,2 @@
-# Mobile-Calculator
-Developing a calculator as a mobile app using Xamarin with .net and C# for programming
+# NumiX
+Developing a calculator as a mobile app using .NET MAUI a cross platform framework developed by Microsoft and C# for programming.
