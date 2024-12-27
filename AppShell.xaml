@@ -9,6 +9,8 @@
 
     <ShellContent
         Title="Numix"
+        Shell.TitleColor="#5A4FCF"
+        Shell.BackgroundColor="#212121"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

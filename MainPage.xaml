@@ -4,25 +4,42 @@
              BackgroundColor="#212121"
              x:Class="NumiX.MainPage">
 
-    <VerticalStackLayout Padding="10" Spacing="10">
+    <Grid RowSpacing="5" 
+          ColumnSpacing="0"
+          Padding="5">
+        <!-- Define the page layout with two rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- Entry Section -->
+            <RowDefinition Height="auto" />
+            <!-- Grid Section -->
+        </Grid.RowDefinitions>
+
+        <!-- Entry at the top -->
         <Entry x:Name="ResultEntry"
+               Grid.Row="0"
                FontSize="24"
                HorizontalOptions="FillAndExpand"
-               VerticalOptions="Start"
+               VerticalOptions="FillAndExpand"
                Text="0"
-               TextColor="Black"
-               BackgroundColor="LightGray"
+               TextColor="GhostWhite"
+               BackgroundColor="#333"
                IsReadOnly="True"
-               HorizontalTextAlignment="End"
-               />
+               VerticalTextAlignment="Start"
+               HorizontalTextAlignment="End" />
 
-        <Grid ColumnSpacing="5" RowSpacing="5">
+        <!-- Grid fixed at the bottom -->
+        <Grid Grid.Row="1"
+              ColumnSpacing="5"
+              RowSpacing="5"
+              VerticalOptions="End"
+              HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -30,143 +47,133 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+
             <!-- Row 0 -->
-            <Button Text="C" 
+            <Button Text="C"
                     Grid.Row="0" Grid.Column="0"
                     BackgroundColor="DarkGray"
                     TextColor="White"
                     FontSize="20"
                     Clicked="OnClearClicked"/>
-            <Button Text="±" 
+            <Button Text="±"
                     Grid.Row="0" Grid.Column="1"
                     BackgroundColor="DarkGray"
                     TextColor="White"
                     FontSize="20"
                     Clicked="OnNegateClicked"/>
-            <Button Text="%" 
+            <Button Text="%"
                     Grid.Row="0" Grid.Column="2"
                     BackgroundColor="DarkGray"
                     TextColor="White"
                     FontSize="20"
                     Clicked="OnPercentClicked"/>
-            <Button Text="÷" 
+            <Button Text="÷"
                     Grid.Row="0" Grid.Column="3"
                     BackgroundColor="Orange"
                     TextColor="White"
                     FontSize="20"
                     Clicked="OnOperatorClicked"/>
 
-            <!-- Row 1 -->
-            <Button Text="7" 
+            <!-- Additional Rows for Numbers and Operators -->
+            <Button Text="7"
                     Grid.Row="1" Grid.Column="0"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="8" 
+            <Button Text="8"
                     Grid.Row="1" Grid.Column="1"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="9" 
+            <Button Text="9"
                     Grid.Row="1" Grid.Column="2"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="×" 
+            <Button Text="×"
                     Grid.Row="1" Grid.Column="3"
                     BackgroundColor="Orange"
                     TextColor="White"
                     FontSize="20"
                     Clicked="OnOperatorClicked"/>
 
-            <!-- Row 2 -->
-            <Button Text="4" 
+            <Button Text="4"
                     Grid.Row="2" Grid.Column="0"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="5" 
+            <Button Text="5"
                     Grid.Row="2" Grid.Column="1"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="6" 
+            <Button Text="6"
                     Grid.Row="2" Grid.Column="2"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="-" 
+            <Button Text="-"
                     Grid.Row="2" Grid.Column="3"
                     BackgroundColor="Orange"
                     TextColor="White"
                     FontSize="20"
                     Clicked="OnOperatorClicked"/>
 
-            <!-- Row 3 -->
-            <Button Text="1" 
+            <Button Text="1"
                     Grid.Row="3" Grid.Column="0"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="2" 
+            <Button Text="2"
                     Grid.Row="3" Grid.Column="1"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="3" 
+            <Button Text="3"
                     Grid.Row="3" Grid.Column="2"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="+" 
+            <Button Text="+"
                     Grid.Row="3" Grid.Column="3"
                     BackgroundColor="Orange"
                     TextColor="White"
                     FontSize="20"
                     Clicked="OnOperatorClicked"/>
 
-            <!-- Row 4 -->
-            <Button Text="0" 
+            <Button Text="0"
                     Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnNumberClicked"/>
-            <Button Text="." 
+            <Button Text="."
                     Grid.Row="4" Grid.Column="2"
                     BackgroundColor="LightGray"
                     TextColor="Black"
                     FontSize="20"
                     Clicked="OnDecimalClicked"/>
-            <Button Text="=" 
+            <Button Text="="
                     Grid.Row="4" Grid.Column="3"
                     BackgroundColor="Orange"
                     TextColor="White"
                     FontSize="20"
                     Clicked="OnEqualsClicked"/>
         </Grid>
-    </VerticalStackLayout>
-    
+    </Grid>
+</ContentPage>
 
 
-
-
-
-
-
-
-
-
-    <!--<ScrollView>
+<!--<ScrollView>
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
@@ -196,5 +203,3 @@
                 HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ScrollView>-->
-
-</ContentPage>
