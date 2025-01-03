@@ -16,24 +16,24 @@ namespace NumiX
         }
         private void OnCounterClicked(object sender, EventArgs e)
         {
-            ResultEntry.Text = "0";
+            QueryLabel.Text = "0";
         }
 
         private void OnNegateClicked(object sender, EventArgs e)
         {
-            if (double.TryParse(ResultEntry.Text, out double result))
+            if (double.TryParse(QueryLabel.Text, out double result))
             {
                 result = -result;
-                ResultEntry.Text = result.ToString();
+                QueryLabel.Text = result.ToString();
             }
         }
 
         private void OnPercentClicked(object sender, EventArgs e)
         {
-            if (double.TryParse(ResultEntry.Text, out double result))
+            if (double.TryParse(QueryLabel.Text, out double result))
             {
                 result = result / 100;
-                ResultEntry.Text = result.ToString();
+                QueryLabel.Text = result.ToString();
             }
         }
 
@@ -42,14 +42,18 @@ namespace NumiX
             if (sender is Button button)
             {
                 currentOperator = button.Text;
-                if (double.TryParse(ResultEntry.Text, out double parsedNumber))
+
+                if (double.TryParse(ResultLabel.Text, out double parsedNumber))
                 {
                     num1 = parsedNumber;
-                    ResultEntry.Text = "0";
+                    ResultLabel.Text = "0";
+
+                    // Update query with the operator
+                    QueryLabel.Text += $" {button.Text} ";
                 }
                 else
                 {
-                    ResultEntry.Text = "Error";
+                    ResultLabel.Text = "Error";
                 }
             }
         }
@@ -58,35 +62,40 @@ namespace NumiX
         {
             if (sender is Button button)
             {
-                if (string.IsNullOrEmpty(ResultEntry.Text) || ResultEntry.Text == "0")
+                if (string.IsNullOrEmpty(ResultLabel.Text) || ResultLabel.Text == "0")
                 {
-                    ResultEntry.Text = button.Text;
+                    ResultLabel.Text = button.Text;
                 }
                 else
                 {
-                    ResultEntry.Text += button.Text;
+                    ResultLabel.Text += button.Text;
                 }
+
+                // Update query as well
+                QueryLabel.Text += button.Text;
             }
         }
 
         private void OnDecimalClicked(object sender, EventArgs e)
         {
-            if (!ResultEntry.Text.Contains("."))
+            if (!QueryLabel.Text.Contains("."))
             {
-                ResultEntry.Text += ".";
+                QueryLabel.Text += ".";
             }
         }
 
         private void OnClearClicked(object sender, EventArgs e)
         {
-            ResultEntry.Text = "0";
+            ResultLabel.Text = "";
+            QueryLabel.Text = "";
         }
+
 
         private void OnEqualsClicked(object sender, EventArgs e)
         {
             if (num1.HasValue && !string.IsNullOrEmpty(currentOperator))
             {
-                if (double.TryParse(ResultEntry.Text, out double parsedNumber))
+                if (double.TryParse(ResultLabel.Text, out double parsedNumber))
                 {
                     num2 = parsedNumber;
 
@@ -99,17 +108,21 @@ namespace NumiX
                         _ => double.NaN,
                     };
 
-                    ResultEntry.Text = double.IsNaN(result) ? "Error" : result.ToString();
+                    // Update the result label with the result
+                    ResultLabel.Text = double.IsNaN(result) ? "Error" : result.ToString();
+
+                    // Update the query label to show the full query
+
+                    // Reset state
                     num1 = null;
                     num2 = null;
                     currentOperator = null;
                 }
                 else
                 {
-                    ResultEntry.Text = "Error";
+                    ResultLabel.Text = "Error";
                 }
             }
-                
         }
     }
 
@@ -121,31 +134,3 @@ namespace NumiX
 
 
 
-
-
-
-//namespace NumiX
-//{
-//    public partial class MainPage : ContentPage
-//    {
-//        int count = 0;
-
-//        public MainPage()
-//        {
-//            InitializeComponent();
-//        }
-
-//        private void OnCounterClicked(object sender, EventArgs e)
-//        {
-//            count++;
-
-//            if (count == 1)
-//                CounterBtn.Text = $"Clicked {count} time";
-//            else
-//                CounterBtn.Text = $"Clicked {count} times";
-
-//            SemanticScreenReader.Announce(CounterBtn.Text);
-//        }
-//    }
-
-//}

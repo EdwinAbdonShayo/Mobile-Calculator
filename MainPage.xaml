@@ -16,17 +16,36 @@
         </Grid.RowDefinitions>
 
         <!-- Entry at the top -->
-        <Entry x:Name="ResultEntry"
-               Grid.Row="0"
-               FontSize="24"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="FillAndExpand"
-               Text="0"
-               TextColor="GhostWhite"
-               BackgroundColor="#333"
-               IsReadOnly="True"
-               VerticalTextAlignment="Start"
-               HorizontalTextAlignment="End" />
+        <Grid Grid.Row="0" 
+            BackgroundColor="#333"
+            Padding="10"
+            ColumnSpacing="10"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Query Label -->
+            <Label x:Name="QueryLabel"
+                Grid.Row="0"
+                FontSize="24"
+                HorizontalOptions="End"
+                VerticalOptions="Start"
+                TextColor="LightGray"
+                Text=""/>
+
+            <!-- Result Label -->
+            <Label x:Name="ResultLabel"
+                Grid.Row="1"
+                FontSize="24"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                TextColor="GhostWhite"
+                Text=""/>
+        </Grid>
+
 
         <!-- Grid fixed at the bottom -->
         <Grid Grid.Row="1"
