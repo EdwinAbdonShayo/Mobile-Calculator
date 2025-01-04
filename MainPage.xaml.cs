@@ -8,7 +8,10 @@ namespace NumiX
 
         private double? num1 = null;
         private double? num2 = null;
+        private double? dangling = null;
         private string? currentOperator = null;
+        private Boolean? operatorClicked = false;
+
 
         public MainPage()
         {
@@ -43,17 +46,27 @@ namespace NumiX
             {
                 currentOperator = button.Text;
 
-                if (double.TryParse(ResultLabel.Text, out double parsedNumber))
+                if ( double.TryParse(QueryLabel.Text, out double parsedNumber) && operatorClicked == false )
                 {
                     num1 = parsedNumber;
-                    ResultLabel.Text = "0";
+                    ResultLabel.Text = "";
+                    operatorClicked = true;
+
+                    // Update query with the operator
+                    QueryLabel.Text += $" {button.Text} ";
+                }
+
+                else if ( double.TryParse(ResultLabel.Text, out double parsedResult) && operatorClicked == false )
+                {
+                    num1 = parsedResult;
+                    ResultLabel.Text = "";
 
                     // Update query with the operator
                     QueryLabel.Text += $" {button.Text} ";
                 }
                 else
                 {
-                    ResultLabel.Text = "Error";
+                    ResultLabel.Text = "Error hapa";
                 }
             }
         }
@@ -62,17 +75,34 @@ namespace NumiX
         {
             if (sender is Button button)
             {
-                if (string.IsNullOrEmpty(ResultLabel.Text) || ResultLabel.Text == "0")
+                if (string.IsNullOrEmpty(QueryLabel.Text) || QueryLabel.Text == "0")
                 {
-                    ResultLabel.Text = button.Text;
+                    QueryLabel.Text = button.Text;
+                }
+                else if ( operatorClicked == true && double.TryParse(button.Text, out double parsedNumber) && num1 != null )
+                {
+                    
+                    dangling = parsedNumber;
+
+                    double result = currentOperator switch
+                    {
+                        "÷" => dangling == 0 ? double.NaN : num1.Value / dangling.Value,
+                        "×" => num1.Value * dangling.Value,
+                        "-" => num1.Value - dangling.Value,
+                        "+" => num1.Value + dangling.Value,
+                        _ => double.NaN,
+                    };
+
+                    ResultLabel.Text = double.IsNaN(result) ? "Error Uwiii" : result.ToString();
+                    QueryLabel.Text += button.Text;
                 }
                 else
                 {
-                    ResultLabel.Text += button.Text;
+                    QueryLabel.Text += button.Text;
                 }
 
                 // Update query as well
-                QueryLabel.Text += button.Text;
+                //ResultLabel.Text += button.Text;
             }
         }
 
@@ -109,18 +139,20 @@ namespace NumiX
                     };
 
                     // Update the result label with the result
-                    ResultLabel.Text = double.IsNaN(result) ? "Error" : result.ToString();
+                    ResultLabel.Text = double.IsNaN(result) ? "Error 1" : result.ToString();
 
                     // Update the query label to show the full query
 
                     // Reset state
                     num1 = null;
                     num2 = null;
+                    dangling = null;
                     currentOperator = null;
+                    operatorClicked = false;
                 }
                 else
                 {
-                    ResultLabel.Text = "Error";
+                    ResultLabel.Text = "Error 2";
                 }
             }
         }
