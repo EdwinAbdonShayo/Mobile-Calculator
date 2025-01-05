@@ -141,10 +141,9 @@ namespace NumiX
 
             QueryLabel.Text = ResultLabel.Text;
             ResultLabel.Text = "";
-            double.TryParse(QueryLabel.Text, out double parsedNum);
-            num1 = parsedNum;
             num2 = null;
             dangling = null;
+            danglingText = null;
             currentOperator = null;
             operatorClicked = false;
         
