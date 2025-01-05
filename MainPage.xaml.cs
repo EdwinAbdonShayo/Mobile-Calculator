@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using System.Linq;
+using Microsoft.Maui.Controls;
 
 namespace NumiX
 {
@@ -11,6 +12,8 @@ namespace NumiX
         private double? dangling = null;
         private string? currentOperator = null;
         private Boolean? operatorClicked = false;
+        private int? operatorCount = null;
+        private string? danglingText = null;
 
 
         public MainPage()
@@ -51,18 +54,24 @@ namespace NumiX
                     num1 = parsedNumber;
                     ResultLabel.Text = "";
                     operatorClicked = true;
+                    operatorCount = 1;
 
                     // Update query with the operator
                     QueryLabel.Text += $" {button.Text} ";
                 }
 
-                else if ( double.TryParse(ResultLabel.Text, out double parsedResult) && operatorClicked == false )
+                else if ( double.TryParse(ResultLabel.Text, out double parsedResult) && operatorClicked == true )
                 {
+
                     num1 = parsedResult;
                     ResultLabel.Text = "";
+                    operatorCount += 1;
+                    danglingText = "";
 
                     // Update query with the operator
                     QueryLabel.Text += $" {button.Text} ";
+
+                    ResultLabel.Text = "";
                 }
                 else
                 {
@@ -79,9 +88,11 @@ namespace NumiX
                 {
                     QueryLabel.Text = button.Text;
                 }
-                else if ( operatorClicked == true && double.TryParse(button.Text, out double parsedNumber) && num1 != null )
+                else if ( operatorClicked == true && num1 != null )
                 {
-                    
+
+                    danglingText += button.Text;
+                    double.TryParse(danglingText, out double parsedNumber);
                     dangling = parsedNumber;
 
                     double result = currentOperator switch
@@ -118,43 +129,25 @@ namespace NumiX
         {
             ResultLabel.Text = "";
             QueryLabel.Text = "";
+            dangling = null;
+            danglingText = null;
+            currentOperator = null;
+            operatorClicked = false;
         }
 
 
         private void OnEqualsClicked(object sender, EventArgs e)
         {
-            if (num1.HasValue && !string.IsNullOrEmpty(currentOperator))
-            {
-                if (double.TryParse(ResultLabel.Text, out double parsedNumber))
-                {
-                    num2 = parsedNumber;
 
-                    double result = currentOperator switch
-                    {
-                        "÷" => num2 == 0 ? double.NaN : num1.Value / num2.Value,
-                        "×" => num1.Value * num2.Value,
-                        "-" => num1.Value - num2.Value,
-                        "+" => num1.Value + num2.Value,
-                        _ => double.NaN,
-                    };
-
-                    // Update the result label with the result
-                    ResultLabel.Text = double.IsNaN(result) ? "Error 1" : result.ToString();
-
-                    // Update the query label to show the full query
-
-                    // Reset state
-                    num1 = null;
-                    num2 = null;
-                    dangling = null;
-                    currentOperator = null;
-                    operatorClicked = false;
-                }
-                else
-                {
-                    ResultLabel.Text = "Error 2";
-                }
-            }
+            QueryLabel.Text = ResultLabel.Text;
+            ResultLabel.Text = "";
+            double.TryParse(QueryLabel.Text, out double parsedNum);
+            num1 = parsedNum;
+            num2 = null;
+            dangling = null;
+            currentOperator = null;
+            operatorClicked = false;
+        
         }
     }
 
